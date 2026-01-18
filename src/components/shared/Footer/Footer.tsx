@@ -16,11 +16,11 @@ const footerSections = [
     links: [
       {
         title: "Events",
-        href: "#",
+        href: "/events",
       },
       {
         title: "About",
-        href: "#",
+        href: "/about",
       },
       {
         title: "Pricing",
