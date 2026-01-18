@@ -2,15 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar, Github, Mail, Lock, ArrowRight } from "lucide-react";
+import { Calendar, Github, Mail, Lock, User, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login submitted");
+    // Handle signup logic here
+    console.log("Signup submitted");
   };
 
   return (
@@ -21,15 +21,34 @@ export default function LoginPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary text-primary-foreground mb-4 shadow-lg shadow-primary/20">
             <Calendar className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome Back</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Create Account</h1>
           <p className="text-muted-foreground mt-2">
-            Enter your credentials to access your account
+            Join us to start managing your events today
           </p>
         </div>
 
-        {/* Login Card */}
+        {/* Signup Card */}
         <div className="bg-background p-8 rounded-3xl border shadow-xl shadow-foreground/5">
           <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-2">
+              <label
+                htmlFor="name"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Full Name
+              </label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  className="pl-10 h-11 rounded-xl"
+                  required
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
               <label
                 htmlFor="email"
@@ -50,20 +69,12 @@ export default function LoginPage() {
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Password
-                </label>
-                <Link
-                  href="/forgot-password"
-                  className="text-sm text-primary hover:underline font-medium"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+              <label
+                htmlFor="password"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
@@ -77,7 +88,7 @@ export default function LoginPage() {
             </div>
 
             <Button type="submit" className="w-full h-11 rounded-xl text-base font-semibold group">
-              Sign In
+              Get Started
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </form>
@@ -88,7 +99,7 @@ export default function LoginPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
+                Or sign up with
               </span>
             </div>
           </div>
@@ -107,9 +118,9 @@ export default function LoginPage() {
 
         {/* Footer Link */}
         <p className="text-center mt-8 text-muted-foreground">
-          Don't have an account?{" "}
-          <Link href="/signup" className="text-primary font-semibold hover:underline">
-            Create an account
+          Already have an account?{" "}
+          <Link href="/login" className="text-primary font-semibold hover:underline">
+            Sign in
           </Link>
         </p>
       </div>
