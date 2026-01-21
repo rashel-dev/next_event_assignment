@@ -8,25 +8,36 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useAuth } from "@/components/useAuth";
 import { Calendar, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Header() {
   const router = useRouter();
-
+  const { isAuthenticated, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuItems = [
     { title: "Home", url: "/" },
     { title: "Events", url: "/events" },
-    { title: "About", url: "/about" }
+    { title: "About", url: "/about" },
+    ...(isAuthenticated ? [{ title: "Dashboard", url: "/dashboard/overview" }] : []),
+    ...(isAuthenticated
+      ? [{ title: "Create Event", url: "/dashboard/create-event" }]
+      : []),
   ];
 
   const handleNavigation = (url: string) => {
     router.push(url);
     setMobileOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+    router.refresh();
   };
 
   return (
@@ -45,9 +56,7 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-6">
           {menuItems.map((item) => (
             <Link href={item.url} key={item.url}>
-              <button
-                className="text-sm font-medium transition-colors hover:text-primary"
-              >
+              <button className="text-sm font-medium transition-colors hover:text-primary">
                 {item.title}
               </button>
             </Link>
@@ -56,6 +65,12 @@ export default function Header() {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-3">
+          {isAuthenticated ? (
+            <Button size="sm" onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <>
               <Button
                 variant="outline"
                 onClick={() => handleNavigation("/signup")}
@@ -66,6 +81,8 @@ export default function Header() {
               <Button onClick={() => handleNavigation("/login")} size="sm">
                 Login
               </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu */}
@@ -87,9 +104,7 @@ export default function Header() {
               <nav className="flex flex-col gap-2">
                 {menuItems.map((item) => (
                   <Link href={item.url} key={item.url}>
-                    <button
-                      className="text-left px-3 py-2 rounded-md hover:bg-accent transition-colors"
-                    >
+                    <button className="text-left px-3 py-2 rounded-md hover:bg-accent transition-colors">
                       {item.title}
                     </button>
                   </Link>
@@ -98,6 +113,16 @@ export default function Header() {
 
               {/* Mobile Auth Buttons */}
               <div className="flex flex-col gap-2 pt-4 border-t">
+                {isAuthenticated ? (
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <>
                     <Button
                       onClick={() => handleNavigation("/login")}
                       variant="outline"
@@ -111,6 +136,8 @@ export default function Header() {
                     >
                       Sign Up
                     </Button>
+                  </>
+                )}
               </div>
             </div>
           </SheetContent>

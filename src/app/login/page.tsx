@@ -15,6 +15,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { setToken } from "@/lib/token";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -49,6 +50,11 @@ export default function LoginPage() {
     
     if(result.token){
       alert("Login successful");
+      setToken(result.token);
+      router.push("/");
+      router.refresh();
+    }else{
+      alert("Login failed");
     }
   }
 
