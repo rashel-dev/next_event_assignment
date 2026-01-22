@@ -10,12 +10,16 @@ export function useAuth() {
 
   // Check token on mount
   useEffect(() => {
-    setIsAuthenticated(!!getToken());
+    const checkAuth = () => setIsAuthenticated(!!getToken());
+    checkAuth();
+    window.addEventListener("auth-change", checkAuth);
+    return () => window.removeEventListener("auth-change", checkAuth);
   }, []);
 
   const logout = useCallback(() => {
     removeToken();
     setIsAuthenticated(false);
+    window.dispatchEvent(new Event("auth-change"));
   }, []);
 
   return {

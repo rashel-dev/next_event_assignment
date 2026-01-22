@@ -37,9 +37,29 @@ export default function SignupPage() {
 
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const onSubmit = (data:any) => {
-    console.log(data);
-  }
+  const onSubmit = async (data: SignupValues) => {
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        alert("Registration successful! Please login.");
+        router.push("/login");
+      } else {
+        alert(result.message || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 p-4">

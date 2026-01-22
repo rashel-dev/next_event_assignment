@@ -51,6 +51,7 @@ export default function LoginPage() {
     if(result.token){
       alert("Login successful");
       setToken(result.token);
+      window.dispatchEvent(new Event("auth-change"));
       router.push("/");
       router.refresh();
     }else{
