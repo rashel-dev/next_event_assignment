@@ -1,5 +1,6 @@
 import { mongoConnect } from "@/lib/mongoConnect";
-import { NextResponse } from "next/server";
+import { TEvent } from "@/types/event";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -23,3 +24,49 @@ export async function GET() {
     );
   }
 }
+
+
+export async function POST(req: NextRequest) {
+  try {
+    const { db } = await mongoConnect();
+    const body: TEvent = await req.json();
+
+    const { title, date, location, image, description } = body;
+
+    // Basic validation
+    if (!title || !date || !location || !image || !description) {
+      return NextResponse.json(
+        { success: false, message: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    // Create new event
+    const newEvent = {
+      title,
+      date,
+      location,
+      image,
+      description,
+      createdAt: new Date(),
+    };
+
+    const result = await db.collection("events").insertOne(newEvent);
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Event created successfully",
+        data: { ...newEvent, id: result.insertedId },
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("failed to create event", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to create event" },
+      { status: 500 }
+    );
+  }
+}
+
