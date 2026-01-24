@@ -73,3 +73,35 @@ export async function PATCH(
     );
   }
 }
+
+
+//delete an event
+
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try{
+    const { db } = await mongoConnect();
+    const { id } = await params;
+
+    const result = await db.collection("events").deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json(
+        { success: false, message: "Event not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Event deleted successfully",
+    });
+  }catch(error){
+    console.error("failed to delete event", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to delete event" },
+      { status: 500 }
+    );
+  }
+}
