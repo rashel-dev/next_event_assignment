@@ -56,7 +56,6 @@ export function UpdateEventModal({
         if (!res.ok) throw new Error("Failed to fetch event");
         const responseData = await res.json();
         const eventData = responseData.data;
-        console.log(eventData);
         if (eventData) {
             reset({
               title: eventData.title,
