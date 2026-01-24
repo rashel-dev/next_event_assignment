@@ -2,6 +2,8 @@ import { mongoConnect } from "@/lib/mongoConnect";
 import { TEvent } from "@/types/event";
 import { NextRequest, NextResponse } from "next/server";
 
+
+//all events get api
 export async function GET() {
   try {
     const { db } = await mongoConnect();
@@ -26,6 +28,7 @@ export async function GET() {
 }
 
 
+//create event api
 export async function POST(req: NextRequest) {
   try {
     const { db } = await mongoConnect();
@@ -69,4 +72,5 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
 
