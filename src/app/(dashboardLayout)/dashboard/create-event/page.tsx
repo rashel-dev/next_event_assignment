@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { TEvent } from "@/types/event";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function CreateEventPage() {
   const {
@@ -39,10 +40,10 @@ export default function CreateEventPage() {
     const result = await res.json();
 
     if (res.ok) {
-      alert("Event created successfully!");
+      toast.success("Event created successfully!");
       router.push("/events");
     } else {
-      alert(result.error || "Failed to create event");
+      toast.error(result.error || "Failed to create event");
     }
   };
 

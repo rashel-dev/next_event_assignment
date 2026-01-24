@@ -20,6 +20,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface SignupValues {
   username: string;
@@ -50,14 +51,14 @@ export default function SignupPage() {
       const result = await res.json();
 
       if (res.ok) {
-        alert("Registration successful! Please login.");
+        toast.success("Registration successful! Please login.");
         router.push("/login");
       } else {
-        alert(result.message || "Registration failed");
+        toast.error(result.message || "Registration failed");
       }
     } catch (error) {
       console.error("Signup error:", error);
-      alert("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 

@@ -6,6 +6,7 @@ import { Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { eventsData } from "../../../../data/eventsData";
+import { toast } from "react-toastify";
 
 export const EventsSection = () => {
   const events = eventsData;
@@ -37,7 +38,7 @@ export const EventsSection = () => {
               <Button
                 variant="outline"
                 className="mt-4 flex items-center gap-2"
-                onClick={() => alert(`View details for ${event.title}`)}
+                onClick={() => toast.info(`View details for ${event.title}`)}
               >
                 <Eye size={18} /> Details
               </Button>

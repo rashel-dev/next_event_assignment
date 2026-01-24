@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface DeleteEventModalProps {
   eventId: string;
@@ -39,11 +40,12 @@ export function DeleteEventModal({
         throw new Error("Failed to delete event");
       }
 
+      toast.success("Event deleted successfully");
       onDeleted();
       onClose(false);
     } catch (error) {
       console.error(error);
-      alert("Failed to delete event");
+      toast.error("Failed to delete event");
     } finally {
       setLoading(false);
     }

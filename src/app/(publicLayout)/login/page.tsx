@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface TLoginValues {
   email: string;
@@ -49,13 +50,13 @@ export default function LoginPage() {
     const result = await res.json();
     
     if(result.token){
-      alert("Login successful");
+      toast.success("Login successful");
       setToken(result.token);
       window.dispatchEvent(new Event("auth-change"));
       router.push("/");
       router.refresh();
     }else{
-      alert("Login failed");
+      toast.error("Login failed");
     }
   }
 

@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { TEvent } from "@/types/event";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface EditEventModalProps {
   eventId: string;
@@ -85,11 +86,12 @@ export function UpdateEventModal({
 
       if (!res.ok) throw new Error("Update failed");
 
+      toast.success("Event updated successfully");
       onUpdated();
       onClose(false);
     } catch (error) {
       console.error(error);
-      alert("Failed to update event");
+      toast.error("Failed to update event");
     } finally {
       setLoading(false);
     }
