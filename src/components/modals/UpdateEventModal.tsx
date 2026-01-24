@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -22,7 +23,7 @@ interface EditEventModalProps {
   onUpdated: () => void;
 }
 
-export function UpdateEventModal({
+export function UpdateEventModal({ 
   eventId,
   open,
   onClose,
@@ -48,23 +49,24 @@ export function UpdateEventModal({
 
   // Fetch event data when modal opens
   useEffect(() => {
-    if (!open || !eventId) return;
-
+    if (!open || !eventId) return; 
     const fetchEvent = async () => {
       try {
         const res = await fetch(`/api/events/${eventId}`);
         if (!res.ok) throw new Error("Failed to fetch event");
-        const data: TEvent = await res.json();
-        console.log(data);
-        // Prefill the form with fetched data
-        reset({
-          title: data.title,
-          date: data.date,
-          location: data.location,
-          image: data.image,
-          description: data.description,
-          id: data.id,
-        });
+        const responseData = await res.json();
+        const eventData = responseData.data;
+        console.log(eventData);
+        if (eventData) {
+            reset({
+              title: eventData.title,
+              date: eventData.date,
+              location: eventData.location,
+              image: eventData.image,
+              description: eventData.description,
+              id: eventData.id || eventData._id,
+            });
+        }
       } catch (error) {
         console.error("Failed to fetch event", error);
       }
@@ -99,6 +101,9 @@ export function UpdateEventModal({
       <DialogContent className="max-w-lg z-99">
         <DialogHeader>
           <DialogTitle>Edit Event</DialogTitle>
+          <DialogDescription>
+            Make changes to your event here. Click update when you&apos;re done.
+          </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)}>

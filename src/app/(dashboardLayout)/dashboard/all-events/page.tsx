@@ -38,7 +38,7 @@ export default function AllEventsPage() {
     try {
       const res = await fetch("/api/events");
       const data = await res.json();
-      setEvents(data.data);
+      setEvents(data);
     } catch (error) {
       console.error("Failed to fetch events", error);
     } finally {
@@ -85,7 +85,7 @@ export default function AllEventsPage() {
 
               <TableBody>
                 {events.map((event) => (
-                  <TableRow key={event._id}>
+                  <TableRow key={event.id || event._id}>
                     <TableCell className="font-medium">{event.title}</TableCell>
                     <TableCell>{event.date}</TableCell>
                     <TableCell>{event.location}</TableCell>
@@ -97,7 +97,7 @@ export default function AllEventsPage() {
                         size="sm"
                         variant="outline"
                         onClick={() => {
-                          setSelectedUpdateEventId(event.id!);
+                          setSelectedUpdateEventId(event.id || event._id || "");
                           setModalOpen(true);
                         }}
                       >
@@ -108,7 +108,7 @@ export default function AllEventsPage() {
                         size="sm"
                         variant="destructive"
                         onClick={() => {
-                          setSelectedDeleteEventId(event.id!);
+                          setSelectedDeleteEventId(event.id || event._id || "");
                           setDeleteOpen(true);
                         }}
                       >

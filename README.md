@@ -22,7 +22,7 @@ A modern, full-stack Event Management Dashboard built with **Next.js 15**, **Typ
 
 ## 🛠️ Tech Stack
 
--   **Framework**: [Next.js 15](https://nextjs.org/)
+-   **Framework**: [Next.js](https://nextjs.org/)
 -   **Language**: [TypeScript](https://www.typescriptlang.org/)
 -   **Database**: [MongoDB](https://www.mongodb.com/)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
