@@ -8,7 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useAuth } from "@/components/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { Calendar, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

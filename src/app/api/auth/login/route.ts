@@ -35,7 +35,7 @@ export async function POST(req:NextRequest){
             id:user._id,
             email:user.email,
             role:user.role
-        },secretKey,{expiresIn:"7d"});
+        },secretKey,{expiresIn:"1d"});
 
         const response = NextResponse.json({
             message:"Login successful",
@@ -46,6 +46,17 @@ export async function POST(req:NextRequest){
                 email:user.email,
                 role:user.role
             }
+        })
+
+        response.cookies.set( 
+        {   
+            name:"token",
+            value:token,
+            httpOnly:true,
+            path:"/",
+            sameSite:"strict",
+            maxAge:24*60*60,
+            secure:process.env.NODE_ENV === "production"
         })
 
         return response;
